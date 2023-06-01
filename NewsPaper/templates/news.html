@@ -1,0 +1,36 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+   <h1>Все новости и статьи</h1>
+   <h3>Всего публикаций: {{ news|length }}</h3>
+
+   <hr>
+   {% if news %}
+       <table>
+           <tr>
+               <td>Заголовок</td>
+               <td>Дата публикации</td>
+               <td>Текст</td>
+               <td>Рейтинг</td>
+           </tr>
+
+           {% for piece_of_news in news %}
+           <tr>
+               <td><a href="http://127.0.0.1:8000/news/{{ piece_of_news.id }}">{{ piece_of_news.title|censor }}</a></td>
+               <td>{{ piece_of_news.date_time|date:'d F Y' }}</td>
+               <td>{{ piece_of_news.content|truncatewords:20|censor }}</td>
+               <td>{{ piece_of_news.rating }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Пока нет никаких новостей и статей, вы можете стать первыми!!</h2>
+   {% endif %}
+{% endblock content %}
